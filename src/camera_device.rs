@@ -83,6 +83,12 @@ pub trait ICCameraDevice{
     );
 }
 
+impl std::fmt::Debug for &dyn ICCameraDevice {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}",  self )
+    }
+}
+
 impl ICCameraDevice for id {
     unsafe fn batteryLevelAvailable(self) -> BOOL {
         msg_send![self, batteryLevelAvailable]
