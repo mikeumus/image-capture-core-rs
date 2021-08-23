@@ -55,7 +55,7 @@ bitflags! {
     }
 }
 
-pub trait ICDevice: Sized {
+pub trait ICDevice {
     /// Get the delegate.
     unsafe fn delegate(self) -> id;
     /// Set the delegate.
@@ -123,6 +123,12 @@ pub trait ICDevice: Sized {
     );
     /// Eject the media if permitted by the device, or disconnect from a remote device.
     unsafe fn requestEjectOrDisconnect(self);
+}
+
+impl std::fmt::Debug for &dyn ICDevice {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}",  self )
+    }
 }
 
 impl ICDevice for id {
