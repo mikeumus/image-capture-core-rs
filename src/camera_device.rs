@@ -3,7 +3,7 @@ use cocoa::foundation::{NSTimeInterval, NSUInteger};
 use libc::off_t;
 use objc::*;
 
-pub trait ICCameraDevice{
+pub trait ICCameraDevice {
     /// Indicates if the device has reported battery charge level￼.
     unsafe fn batteryLevelAvailable(self) -> BOOL;
     /// Indicates the battery charge level. Its value ranges from 0 to 100.

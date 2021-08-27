@@ -6,7 +6,7 @@ use libc::{c_double, off_t};
 use objc::*;
 
 /// ICCameraItem is an abstract class that represents an item in an ICCameraDevice object
-pub trait ICCameraItem: Sized {
+pub trait ICCameraItem {
     /// Parent device of this folder.
     unsafe fn device(self) -> id;
     /// Parent folder of this folder.
