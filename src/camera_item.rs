@@ -41,6 +41,12 @@ pub trait ICCameraItem {
     unsafe fn wasAddedAfterContentCatalogCompleted(self) -> BOOL;
 }
 
+impl std::fmt::Debug for &dyn ICCameraItem {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}",  self )
+    }
+}
+
 impl ICCameraItem for id {
     unsafe fn device(self) -> id {
         msg_send![self, device]
