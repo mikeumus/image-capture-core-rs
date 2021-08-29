@@ -2,7 +2,9 @@ use cocoa::base::{id, BOOL};
 use cocoa::foundation::{NSTimeInterval, NSUInteger};
 use libc::off_t;
 use objc::*;
-use crate::device::ICDevice;
+use crate::device::{ICDevice, ICDeviceType};
+use core_graphics::image::CGImageRef;
+use libc::{c_int, c_longlong};
 
 pub trait ICCameraDevice {
     /// Get the delegate.
@@ -94,7 +96,254 @@ impl std::fmt::Debug for &dyn ICCameraDevice {
     }
 }
 
-// impl ICDevice for ICCameraDevice {}
+impl ICCameraDevice for &dyn ICCameraDevice {
+    unsafe fn delegate(self) -> id {
+        msg_send![self, delegate]
+    }
+
+    unsafe fn setDelegate(self, delegate: id) {
+        // msg_send![self, setDelegate: delegate]
+        ICDevice::setDelegate(self, delegate)
+    }
+
+    unsafe fn batteryLevelAvailable(self) -> BOOL {
+        msg_send![self, batteryLevelAvailable]
+    }
+
+    unsafe fn batteryLevel(self) -> NSUInteger {
+        msg_send![self, batteryLevel]
+    }
+
+    unsafe fn contentCatalogPercentCompleted(self) -> NSUInteger {
+        msg_send![self, contentCatalogPercentCompleted]
+    }
+
+    unsafe fn contents(self) -> id {
+        msg_send![self, contents]
+    }
+
+    unsafe fn mediaFiles(self) -> id {
+        msg_send![self, mediaFiles]
+    }
+
+    unsafe fn timeOffset(self) -> NSTimeInterval {
+        msg_send![self, timeOffset]
+    }
+
+    unsafe fn isAccessRestrictedAppleDevice(self) -> BOOL {
+        msg_send![self, isAccessRestrictedAppleDevice]
+    }
+
+    unsafe fn mountPoint(self) -> id {
+        msg_send![self, mountPoint]
+    }
+
+    unsafe fn tetheredCaptureEnabled(self) -> BOOL {
+        msg_send![self, tetheredCaptureEnabled]
+    }
+
+    unsafe fn filesOfType(self, fileUTType: id) -> id {
+        msg_send![self, filesOfType: fileUTType]
+    }
+
+    unsafe fn requestSyncClock(self) {
+        msg_send![self, requestSyncClock]
+    }
+
+    unsafe fn requestEnableTethering(self) {
+        msg_send![self, requestEnableTethering]
+    }
+
+    unsafe fn requestDisableTethering(self) {
+        msg_send![self, requestDisableTethering]
+    }
+
+    unsafe fn requestTakePicture(self) {
+        msg_send![self, requestTakePicture]
+    }
+
+    unsafe fn requestDeleteFiles(self, files: id) {
+        msg_send![self, requestDeleteFiles: files]
+    }
+
+    unsafe fn cancelDelete(self) {
+        msg_send![self, cancelDelete]
+    }
+
+    unsafe fn requestDownloadFile(
+        self,
+        file: id,
+        options: id,
+        downloadDelegate: id,
+        didDownloadSelector: id,
+        contextInfo: id,
+    ) {
+        msg_send![self, requestDownloadFile:file options:options downloadDelegate:downloadDelegate didDownloadSelector:didDownloadSelector contextInfo:contextInfo]
+    }
+
+    unsafe fn cancelDownload(self) {
+        msg_send![self, cancelDownload]
+    }
+
+    unsafe fn requestUploadFile(
+        self,
+        fileURL: id,
+        options: id,
+        uploadDelegate: id,
+        didUploadSelector: id,
+        contextInfo: id,
+    ) {
+        msg_send![self, requestUploadFile:fileURL options:options uploadDelegate:uploadDelegate didUploadSelector:didUploadSelector contextInfo:contextInfo]
+    }
+
+    unsafe fn requestReadDataFromFile(
+        self,
+        file: id,
+        atOffset: off_t,
+        length: off_t,
+        readDelegate: id,
+        didReadDataSelector: id,
+        contextInfo: id,
+    ) {
+        msg_send![self, requestReadDataFromFile:file atOffset:atOffset length:length readDelegate:readDelegate didReadDataSelector:didReadDataSelector contextInfo:contextInfo]
+    }
+
+    unsafe fn requestSendPTPCommand(
+        self,
+        command: id,
+        outData: id,
+        sendCommandDelegate: id,
+        didSendCommandSelector: id,
+        contextInfo: id,
+    ) {
+        msg_send![self, requestSendPTPCommand:command outData:outData sendCommandDelegate:sendCommandDelegate didSendCommandSelector:didSendCommandSelector contextInfo:contextInfo]
+    }
+}
+
+impl ICDevice for &dyn ICCameraDevice {
+    unsafe fn delegate(self) -> id {
+        msg_send![self, delegate]
+    }
+
+    unsafe fn setDelegate(self, delegate: id) {
+        msg_send![self, setDelegate: delegate]
+    }
+
+    unsafe fn type_(self) -> ICDeviceType {
+        msg_send![self, type]
+    }
+
+    unsafe fn name(self) -> id {
+        msg_send![self, name]
+    }
+
+    unsafe fn icon(self) -> CGImageRef {
+        msg_send![self, icon]
+    }
+
+    unsafe fn capabilities(self) -> id {
+        msg_send![self, capabilities]
+    }
+
+    unsafe fn modulePath(self) -> id {
+        msg_send![self, modulePath]
+    }
+
+    unsafe fn moduleVersion(self) -> id {
+        msg_send![self, moduleVersion]
+    }
+
+    unsafe fn isRemote(self) -> BOOL {
+        msg_send![self, isRemote]
+    }
+
+    unsafe fn transportType(self) -> id {
+        msg_send![self, transportType]
+    }
+
+    unsafe fn usbLocationID(self) -> c_int {
+        msg_send![self, usbLocationID]
+    }
+
+    unsafe fn usbProductID(self) -> c_int {
+        msg_send![self, usbProductID]
+    }
+
+    unsafe fn usbVendorID(self) -> c_int {
+        msg_send![self, usbVendorID]
+    }
+
+    unsafe fn fwGUID(self) -> c_longlong {
+        msg_send![self, fwGUID]
+    }
+
+    unsafe fn serialNumberString(self) -> id {
+        msg_send![self, serialNumberString]
+    }
+
+    unsafe fn locationDescription(self) -> id {
+        msg_send![self, locationDescription]
+    }
+
+    unsafe fn hasOpenSession(self) -> BOOL {
+        msg_send![self, hasOpenSession]
+    }
+
+    unsafe fn UUIDString(self) -> id {
+        msg_send![self, UUIDString]
+    }
+
+    unsafe fn persistentIDString(self) -> id {
+        msg_send![self, persistentIDString]
+    }
+
+    unsafe fn buttonPressed(self) -> id {
+        msg_send![self, buttonPressed]
+    }
+
+    unsafe fn autolaunchApplicationPath(self) -> id {
+        msg_send![self, autolaunchApplicationPath]
+    }
+
+    unsafe fn setAutolaunchApplicationPath(self, autolaunchApplicationPath: id) {
+        msg_send![
+            self,
+            setAutolaunchApplicationPath: autolaunchApplicationPath
+        ]
+    }
+
+    unsafe fn userData(self) -> id {
+        msg_send![self, userData]
+    }
+
+    unsafe fn requestOpenSession(self) {
+        msg_send![self, requestOpenSession]
+    }
+
+    unsafe fn requestCloseSession(self) {
+        msg_send![self, requestCloseSession]
+    }
+
+    unsafe fn requestYield(self) {
+        msg_send![self, requestYield]
+    }
+
+    unsafe fn requestSendMessage(
+        self,
+        messageCode: u64,
+        outData: id,
+        maxReturnedDataSize: u64,
+        sendMessageDelegate: id,
+        didSendMessageSelector: id,
+        contextInfo: id,
+    ) {
+        msg_send![self, requestSendMessage:messageCode outData:outData maxReturnedDataSize:maxReturnedDataSize sendMessageDelegate:sendMessageDelegate didSendMessageSelector:didSendMessageSelector contextInfo:contextInfo]
+    }
+
+    unsafe fn requestEjectOrDisconnect(self) {
+        msg_send![self, requestEjectOrDisconnect]
+    }
+}
 
 impl ICCameraDevice for id {
     unsafe fn delegate(self) -> id {
