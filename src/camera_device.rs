@@ -2,12 +2,13 @@ use cocoa::base::{id, BOOL};
 use cocoa::foundation::{NSTimeInterval, NSUInteger};
 use libc::off_t;
 use objc::*;
+use crate::device::ICDevice;
 
 pub trait ICCameraDevice {
     /// Get the delegate.
     unsafe fn delegate(self) -> id;
     /// Set the delegate.
-    unsafe fn setDelegate(&self, delegate: id);
+    unsafe fn setDelegate(self, delegate: id);
     /// Indicates if the device has reported battery charge level￼.
     unsafe fn batteryLevelAvailable(self) -> BOOL;
     /// Indicates the battery charge level. Its value ranges from 0 to 100.
@@ -100,8 +101,9 @@ impl ICCameraDevice for id {
         msg_send![self, delegate]
     }
 
-    unsafe fn setDelegate(&self, delegate: id) {
-        msg_send![&self, setDelegate: delegate]
+    unsafe fn setDelegate(self, delegate: id) {
+        // msg_send![self, setDelegate: delegate]
+        ICDevice::setDelegate(self, delegate)
     }
 
     unsafe fn batteryLevelAvailable(self) -> BOOL {
