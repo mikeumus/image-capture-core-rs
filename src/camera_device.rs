@@ -101,7 +101,7 @@ impl ICCameraDevice for id {
     }
 
     unsafe fn setDelegate(&self, delegate: id) {
-        msg_send![self, setDelegate: delegate]
+        msg_send![&self, setDelegate: delegate]
     }
 
     unsafe fn batteryLevelAvailable(self) -> BOOL {
