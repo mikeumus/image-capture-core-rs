@@ -7,7 +7,7 @@ pub trait ICCameraDevice {
     /// Get the delegate.
     unsafe fn delegate(self) -> id;
     /// Set the delegate.
-    unsafe fn setDelegate(self, delegate: id);
+    unsafe fn setDelegate(&self, delegate: id);
     /// Indicates if the device has reported battery charge level￼.
     unsafe fn batteryLevelAvailable(self) -> BOOL;
     /// Indicates the battery charge level. Its value ranges from 0 to 100.
@@ -93,12 +93,14 @@ impl std::fmt::Debug for &dyn ICCameraDevice {
     }
 }
 
+// impl ICDevice for ICCameraDevice {}
+
 impl ICCameraDevice for id {
     unsafe fn delegate(self) -> id {
         msg_send![self, delegate]
     }
 
-    unsafe fn setDelegate(self, delegate: id) {
+    unsafe fn setDelegate(&self, delegate: id) {
         msg_send![self, setDelegate: delegate]
     }
 
