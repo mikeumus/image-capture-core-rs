@@ -119,7 +119,8 @@ pub mod image_capture_core_mod {
             );
             println!("  📸 add_method withCompleteContentCatalog");
             decl.add_method(
-                sel!(withCompleteContentCatalog:),
+                // sel!(withCompleteContentCatalog:),
+                sel!(deviceDidBecomeReadyWithCompleteContentCatalog:),
                 device_did_become_ready as extern "C" fn(&Object, Sel, id),
             );
             println!("  📸 add_method end");

@@ -43,7 +43,7 @@ pub trait ICCameraItem {
 
 impl std::fmt::Debug for &dyn ICCameraItem {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{:?}",  self )
+        write!(f, "{:?}",  self)
     }
 }
 
@@ -126,7 +126,7 @@ impl ICCameraFolder for id {
 }
 
 /// This class represents a folder on an ICCameraDevice object.
-pub trait ICCameraFile: Sized {
+pub trait ICCameraFile {
     /// Size of file in bytes.
     unsafe fn fileSize(self) -> off_t;
     /// Desired orientation of image to use when it is downloaded.
@@ -137,6 +137,12 @@ pub trait ICCameraFile: Sized {
     /// Otherwise it is an array of ICCameraFile instances of sidecar files associated with this file.
     /// An example of a sidecar file is a file with the same base name as this file and having an extension XMP.
     unsafe fn sidecarFiles(self) -> id;
+}
+
+impl std::fmt::Debug for &dyn ICCameraFile {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{:?}",  self)
+    }
 }
 
 impl ICCameraFile for id {
